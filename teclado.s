@@ -6,30 +6,30 @@ verifica_teclado:
     sw ra, 0(sp)
 
     # ----------------------------------------------------
-    # 1. LÊ O STATUS DO TECLADO
+    # 1. LÃŠ O STATUS DO TECLADO
     # ----------------------------------------------------
     li t0, 0xFF200000
     lw t1, 0(t0)
     andi t1, t1, 1
     beqz t1, fim_teclado
 
-    # Lê qual tecla foi apertada
+    # LÃª qual tecla foi apertada
     lw t2, 4(t0)          
 
-    # Pega as posições atuais do Dodô (X e Y)
+    # Pega as posiÃ§Ãµes atuais do DodÃ´ (X e Y)
     la t3, player_x
     lw a0, 0(t3)          
     la t4, player_y
     lw a1, 0(t4)          
 
-    # Salva a posição antiga
+    # Salva a posiÃ§Ã£o antiga
     la t6, old_x
     sw a0, 0(t6)
     la t6, old_y
     sw a1, 0(t6)
 
     # ----------------------------------------------------
-    # 2. IDENTIFICA A TECLA E A DIREÇÃO
+    # 2. IDENTIFICA A TECLA E A DIREÃ‡ÃƒO
     # ----------------------------------------------------
     li t5, 119            # W (Cima)
     beq t2, t5, move_w
@@ -40,7 +40,7 @@ verifica_teclado:
     li t5, 100            # D (Direita)
     beq t2, t5, move_d
     
-    li t5, 109            # m (Música/Som - minúsculo)
+    li t5, 109            # m (MÃºsica/Som - minÃºsculo)
     beq t2, t5, aperta_m
     
     j fim_teclado         # Outra tecla ignorada
@@ -71,7 +71,7 @@ move_d:
 
 testa_colisao:
     # ----------------------------------------------------
-    # 3. COLISÃO COM AS BORDAS DA TELA
+    # 3. COLISÃƒO COM AS BORDAS DA TELA
     # ----------------------------------------------------
     bltz a0, erro_movimento
     li t5, 296
@@ -81,7 +81,7 @@ testa_colisao:
     bgt a1, t5, erro_movimento
 
     # ----------------------------------------------------
-    # 4. MATEMÁTICA DA MATRIZ
+    # 4. MATRIZ
     # ----------------------------------------------------
     addi t0, a0, 12      
     srli t0, t0, 4       
@@ -128,11 +128,10 @@ continua_matriz:
     beq t4, t5, erro_movimento    
 
 checa_saida:
-    # 1. Checa o bloco 4 (saída original/árvore)
     li t5, 4                 
     beq t2, t5, vai_para_passa_fase 
 
-    # 2. Checa a Grama! 
+    #1. Checa a Grama
 
     li t5, 6                 
     beq t2, t5, vai_para_passa_fase
@@ -143,7 +142,7 @@ checa_saida:
 # ETIQUETAS FINAIS DO TECLADO
 # ==========================================
 aperta_m:
-    # Chama a função de som que mora no main.s
+    # Chama a funÃ§Ã£o de som que mora no main.s
     jal toca_som_passo
     j fim_teclado
 
@@ -159,7 +158,6 @@ movimento_liberado:
     la t4, player_y
     sw a1, 0(t4)         
 
-    # TOCO SOM DE PASSO: Nota aguda curta de bloco de madeira (woodblock)
     addi sp, sp, -4
     sw ra, 0(sp)
     li a0, 76            # Nota aguda
