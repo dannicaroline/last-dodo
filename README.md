@@ -12,7 +12,7 @@ Abra o arquivo `main.asm` no RARS. Em seguida, vá em **Tools** e abra o **Bitma
 
 ## Como jogar
 
-Use as teclas **W, A, S e D** para movimentar o personagem.
+Use as teclas **W, A, S e D** em "Keyboard and Display MMIO Simulator"para movimentar o personagem.
 
 O objetivo é chegar até a grama no canto da tela sem encostar nos inimigos.
 
