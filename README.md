@@ -8,7 +8,7 @@ O jogo foi desenvolvido em Assembly RISC-V e é inspirado em *Journey of the Pra
 
 Baixe todos os arquivos do projeto e instale o Java e o RARS.
 
-Abra o arquivo `main.asm` no RARS. Em seguida, vá em **Tools** e abra o **Bitmap Display** e o **Keyboard and Display MMIO Simulator**. Nas duas janelas, clique em **Connect to Program** e depois execute o programa.
+Abra o arquivo `main.asm` no RARS. Em seguida, aperte a chave de fenda (assemble) e vá em **Tools** e abra o **Bitmap Display** e o **Keyboard and Display MMIO Simulator**. Nas duas janelas, clique em **Connect to Program** e depois execute o programa.
 
 ## Como jogar
 
