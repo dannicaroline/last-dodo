@@ -47,7 +47,7 @@ aguarda_input:
     xori t1, t1, 1       
     sw t1, 0(t0)
 
-    # 2. JUIZ DE TURNO (Guarda a posiÁ„o)
+    # 2. JUIZ DE TURNO (Guarda a posi√ß√£o)
     la t0, player_x
     lw s10, 0(t0)
     la t0, player_y
@@ -56,7 +56,7 @@ aguarda_input:
     # 3. FAXINA NO ESCURO
     jal apaga_personagens          
 
-    # 4. DOD‘ ANDA E CHECA
+    # 4. DOD√î ANDA E CHECA
     jal verifica_teclado        
     jal checa_colisao_inimigos  
     
@@ -96,7 +96,7 @@ pula_turno_inimigo:
     j loop_principal
 
 # ===================================================
-# FUN«√O:Apaga os Inimigos e o DodÙ
+# FUN√á√ÉO:Apaga os Inimigos e o Dod√¥
 # ===================================================
 .globl apaga_personagens
 apaga_personagens:
@@ -105,13 +105,13 @@ apaga_personagens:
     sw s0, 4(sp)
     sw s1, 8(sp)
 
-    # 1. Guarda a posiÁ„o real do DodÙ no bolso
+    # 1. Guarda a posi√ß√£o real do Dod√¥ no bolso
     la t0, player_x
     lw s0, 0(t0)
     la t1, player_y
     lw s1, 0(t1)
 
-    # 2. Apaga o DodÙ primeiro
+    # 2. Apaga o Dod√¥ primeiro
     jal restaura_radar
 
     # 3. Escolhe qual inimigo apagar
@@ -144,7 +144,7 @@ disfarca_cachorro:
     jal restaura_radar
 
 restaura_dodo:
-    # 4. Devolve a posiÁ„o original para o DodÙ
+    # 4. Devolve a posi√ß√£o original para o Dod√¥
     la t0, player_x
     sw s0, 0(t0)
     la t1, player_y
@@ -157,7 +157,7 @@ restaura_dodo:
     jr ra
 
 # ===================================================
-# ROTINA DE TRANSI«√O DE FASE E GAME OVER
+# ROTINA DE TRANSI√á√ÉO DE FASE E GAME OVER
 # ===================================================
 passa_fase:
 
@@ -165,7 +165,7 @@ passa_fase:
     lw t1, 0(t0)         
     
     li t2, 2
-    beq t1, t2, venceu_o_jogo # SE A FASE ERA A 2, VAI PARA A TELA DE VIT”RIA
+    beq t1, t2, venceu_o_jogo 
 
     # ---------------------------------------------------------
     # melodia
@@ -181,7 +181,7 @@ passa_fase:
     li t1, 2
     sw t1, 0(t0)
     
-    # Reseta a posiÁ„o do DodÙ para o inÌcio do Mapa 2
+    # Reseta a posi√ß√£o do Dod√¥ para o in√≠cio do Mapa 2
     la t0, player_x
     li t1, 16
     sw t1, 0(t0)
@@ -195,11 +195,11 @@ venceu_o_jogo:
     j tela_vitoria            
 
 # ---------------------------------------------------------
-# M⁄SICA DE TRANSI«√O (Undertale Celesta Short)
+# M√öSICA DE TRANSI√á√ÉO
 # ---------------------------------------------------------
 toca_musica_transicao:
-    li a2, 8             # Instrumento Celesta
-    li a3, 127           # Volume M·ximo
+    li a2, 8        
+    li a3, 127       
     li a0, 62            
     li a1, 150           
     li a7, 33            
@@ -223,7 +223,7 @@ toca_musica_transicao:
     jr ra
 
 # ===================================================
-# SISTEMA DE ¡UDIO MIDI PADR√O
+# SISTEMA DE √ÅUDIO MIDI PADR√ÉO
 # ===================================================
 .globl toca_som_passo, toca_som_erro
 
@@ -246,7 +246,7 @@ toca_som_erro:
     jr ra
 
 # =========================================================
-# FUN«√O: Checa Colis„o com Inimigos (Hitbox por ¡rea Real)
+# FUN√á√ÉO: Checa Colis√£o com Inimigos (Hitbox por √Årea Real)
 # =========================================================
 .globl checa_colisao_inimigos
 checa_colisao_inimigos:
@@ -267,7 +267,7 @@ colide_rato:
     bgez t4, rato_dx_ok
     neg t4, t4
 rato_dx_ok:
-    li t5, 20               # Raio da Hitbox X
+    li t5, 20           
     bge t4, t5, fim_colisao
 
     la t0, player_y
@@ -278,7 +278,7 @@ rato_dx_ok:
     bgez t4, rato_dy_ok
     neg t4, t4
 rato_dy_ok:
-    li t5, 20               # Raio da Hitbox Y
+    li t5, 20           
     bge t4, t5, fim_colisao
     j dodo_toma_dano
 
@@ -321,7 +321,6 @@ dodo_toma_dano:
     beq t1, t2, renasce_mapa2
 
 renasce_mapa1:
-    # TOCO SOM DE DANO (Som agudo de susto)
     li a0, 80            
     li a1, 150           
     li a2, 4             
@@ -346,7 +345,6 @@ renasce_mapa1:
     j carrega_fase
 
 renasce_mapa2:
-    # TOCO SOM DE DANO (Som agudo de susto)
     li a0, 80            
     li a1, 150           
     li a2, 4             
@@ -371,7 +369,6 @@ renasce_mapa2:
     j carrega_fase
 
 game_over:
-    # TOCO SOM DE MORTE (”rg„o f˙nebre longo)
     li a0, 36            
     li a1, 1000          
     li a2, 19            
@@ -379,14 +376,13 @@ game_over:
     li a7, 33            
     ecall
 
-    # PREPARA O APAG√O DA TELA
     la t0, frame_atual
     lw a3, 0(t0)
     li t0, 0xFF0
     add t0, t0, a3
     slli t0, t0, 20
 
-    # Pinta os 19200 pixels de PRETO
+    # Pinta os 19200 pixels de preto
     li t1, 19200
     li t2, 0x00000000    
 loop_tela_morte:
@@ -406,11 +402,11 @@ fim_colisao:
     jr ra   
 
 # =========================================================
-# TELA DE VIT”RIA DEFINITIVA (32 BITS)
+# TELA DE VIT√ìRIA DEFINITIVA (32 BITS)
 # =========================================================
 tela_vitoria:
     # ---------------------------------------------------------
-    # TRILHA DE VIT”RIA 
+    # TRILHA DE VIT√ìRIA 
     # ---------------------------------------------------------
     addi sp, sp, -4
     sw ra, 0(sp)
@@ -501,7 +497,7 @@ trava_vitoria:
 
 
 # =========================================================
-# FUN«√O: Desenha os Inimigos na Tela
+# FUN√á√ÉO: Desenha os Inimigos na Tela
 # =========================================================
 .globl desenha_inimigos
 desenha_inimigos:
@@ -544,7 +540,7 @@ fim_desenha_inimigos:
     jr ra
 
 # =========================================================
-# FUN«√O: Move Inimigos (I
+# FUN√á√ÉO: Move Inimigos (I
 # =========================================================
 .globl move_inimigos
 move_inimigos:
@@ -701,7 +697,7 @@ fim_move_inimigos:
     jr ra
 
 # =========================================================
-# FUN«√O SECUND¡RIA: LÍ a Matriz
+# FUN√á√ÉO SECUND√ÅRIA: L√™ a Matriz
 # =========================================================
 le_matriz_inimigos:
     bltz a0, parede_matriz
@@ -749,7 +745,7 @@ parede_matriz:
     jr ra
     
 # =========================================================
-# FUN«√O: Toca Nota MIDI AssÌncrona
+# FUN√á√ÉO: Toca Nota MIDI Ass√≠ncrona
 # =========================================================
 toca_som:
     li a1, 120     
