@@ -2,7 +2,7 @@
 .globl desenha_mapa, desenha_personagem, atualiza_tela, pinta_fundo
 
 # =========================================================
-# FUNÇÃO 1: Derrama o Balde de Tinta na Tela Oculta
+# FUNÃ‡ÃƒO 1: Cor na tela oculta
 # =========================================================
 pinta_fundo:
     la t3, frame_atual
@@ -13,7 +13,6 @@ pinta_fundo:
 
     li t1, 19200         
     
-    # Verifica a fase para escolher a cor base
     la t4, fase_atual
     lw t5, 0(t4)
     li t6, 2
@@ -33,7 +32,7 @@ loop_fundo:
     jr ra
 
 # =========================================================
-# FUNÇÃO 2: Desenha o Mapa na Tela Oculta
+# FUNÃ‡ÃƒO 2: Desenha o Mapa na Tela Oculta
 # =========================================================
 desenha_mapa:
     addi sp, sp, -24
@@ -157,7 +156,7 @@ fim_mapa:
     jr ra
 
 # =========================================================
-# FUNÇÃO 3: Desenha o Dodô na Tela Oculta
+# FUNÃ‡ÃƒO 3: Desenha o DodÃ´ na Tela Oculta
 # =========================================================
 desenha_personagem:
     addi sp, sp, -4
@@ -178,7 +177,7 @@ desenha_personagem:
     li t4, 115           # Letra S
     beq t3, t4, puxa_s
     
-    # Se não for nenhum deles, o padrão é o D (Direita)
+    # Se nÃ£o for nenhum deles, o padrÃ£o Ã© o D (Direita)
 puxa_d:
     la a2, sprite_dodo_d
     j fim_direcao
@@ -203,7 +202,7 @@ fim_direcao:
     jr ra
 
 # =========================================================
-# FUNÇÃO 4: Pintor 
+# FUNÃ‡ÃƒO 4: Pintor 
 # =========================================================
 desenha_sprite:
     li t0, 0xFF0         
@@ -236,17 +235,17 @@ ignora_pixel:
     jr ra
 
 # =========================================================
-# FUNÇÃO 5: Vira o Monitor
+# FUNÃ‡ÃƒO 5: Vira o Monitor
 # =========================================================
 atualiza_tela:
     la t0, frame_atual
     lw t1, 0(t0)
     li t4, 0xFF200604
-    sw t1, 0(t4)         # Acende a tela que acabamos de pintar
+    sw t1, 0(t4) 
     jr ra
 
 # =========================================================
-# FUNÇÃO 6: Restaura o Radar
+# FUNÃ‡ÃƒO 6: Restaura o Radar
 # =========================================================
 restaura_radar:
     addi sp, sp, -36
@@ -307,16 +306,15 @@ rr_loop:
 
     li t1, 16            
     
-    # Pega a cor de limpeza correta baseada na fase
     la t4, fase_atual
     lw t5, 0(t4)
     li t6, 2
     beq t5, t6, rr_limpa_fase2
 rr_limpa_fase1:
-    li a2, 0x1A1A1A1A    # Verde
+    li a2, 0x1A1A1A1A
     j rr_limpa_y
 rr_limpa_fase2:
-    li a2, 0x14141414    # Terra
+    li a2, 0x14141414
 
 rr_limpa_y:
     li t2, 4             
@@ -340,22 +338,18 @@ rr_limpa_x:
     li t1, 3
     beq t0, t1, rr_grama
     
-    # ---> ALTERADO: O 4 (saída) agora é desenhado com o pincel de grama separado!
     li t1, 4
     beq t0, t1, rr_saida_grama 
     
-    # ---> ADICIONADO: Verifica a árvore escura para o radar não apagá-la
     li t1, 5
     beq t0, t1, rr_arvore_escura
     
     j rr_ignora
 
-# ---> ADICIONADO: Etiqueta EXCLUSIVA da grama de saída (Ignora regras do mapa 2)
 rr_saida_grama:
     la a2, sprite_grama
     j rr_pinta
 
-# ---> ADICIONADO: Etiqueta que carrega o sprite da árvore escura
 rr_arvore_escura:
     la a2, sprite_arvore_escura
     j rr_pinta
